@@ -1,0 +1,14 @@
+1-   En el main, hago un random para generar el tamaño de las filas y las columnas.
+2-   Se genera 2 listas de valores de 3-4.
+3-   La lista Rows nos dirá la cantidad de barcos o partes de barcos que existen en una fila
+     por ejemplo en Row[0]=3, me dice que en la fila 0, hay 3 barcos/partes. Ocurre los mismo para
+     las Cols.
+4-   Después en la función Battle_Ship, genero un Problema, en cual en primera instancia creo las
+     varibles con 2 tipos de valores 0 o 1.
+5-   Ahora bien al ya tener generadas las varibles, comienzo con las resticciones, que son:
+     1) Filas, que recorro todos los indices de las filas y digo que la suma de todos esos indices
+     no puede ser mayor a al maximo, osea al indice de la fila.
+     2) Columnas, exactamente lo mismo, pero recorro las columnas y digo que las sumas de los indices
+     de esa columna debe ser igual al idice de la columna.
+6-   Compruebo que exista solución y la muestro. Por que al generar mapas randoms, es probable que
+     no existan.
