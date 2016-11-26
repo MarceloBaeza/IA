@@ -1,9 +1,11 @@
+# Froms
 from Norvig import Node
 from Problem import Problem
 from utils import *
+from random import shuffle
+# imports
 import matplotlib.pyplot as plt
 import numpy as np
-from random import shuffle
 
 
 class TSP:
@@ -76,19 +78,44 @@ def Initial(Nodes):
     return Nodes
 
 
-def Inital_Cost(problem_initial):
+def Cost(Ciclo):
     dist = 0
-    for i in range(len(problem_initial) - 1):
-        a = [problem_initial[i].X, problem_initial[i].Y]
+    for i in range(len(Ciclo) - 1):
+        a = [Ciclo[i].X, Ciclo[i].Y]
         a = np.array(a)
-        b = [problem_initial[i + 1].X, problem_initial[i + 1].Y]
+        b = [Ciclo[i + 1].X, Ciclo[i + 1].Y]
         b = np.array(b)
         dist += np.linalg.norm(a - b)
     return dist
 
 
+def SHOW(Node):
+    print("Graficando ...")
+    # print(Solution)
+    x = []
+    y = []
+    for n in Node:
+        x.append(n.X)
+        y.append(n.Y)
+    plt.figure('Solucion Final')
+    plt.plot(x, y, 'co')
+    a_scale = float(max(x)) / float(100000)
+    plt.arrow(x[-1], y[-1], (x[0] - x[-1]), (y[0] - y[-1]), head_width=a_scale,
+              color='g', length_includes_head=True)
+    for i in range(0, len(x) - 1):
+        plt.arrow(x[i], y[i], (x[i + 1] - x[i]), (y[i + 1] - y[i]), head_width=a_scale,
+                  color='g', length_includes_head=True)
+
+    # Set axis too slitghtly larger than the set of x and y
+    # plt.xlim(0, max(x))
+    # plt.ylim(0, max(y))
+    plt.show()
+    # for it1 in Node:
+    #     print(str(it1.point) + " : " + str(it1.X) + ", " + str(it1.Y))
+
+
 if __name__ == "__main__":
-    # Lectura de archio
+        # Lectura de archio
     print("Leyendo archivo")
     Nodes_original, Nodes_init = Read()
     # Genero la primera inicialización
@@ -97,29 +124,8 @@ if __name__ == "__main__":
     print("Gerando problem")
     # Genero un objeto Problem
     P1 = Problem(Nodes_init)
-    print("Distancia Inicial: " + str(Inital_Cost(Nodes_init)))
+    print("Distancia Inicial: " + str(Cost(Nodes_init)))
     print("Iniciando hill_climbing")
     Solution = hill_climbing(P1)
-    print("Distancia Final: " + str(Inital_Cost(Nodes_init)))
-
-    # print(Solution)
-    x = []
-    y = []
-    for n in Solution:
-        x.append(n.X)
-        y.append(n.Y)
-    plt.figure('probando')
-    plt.plot(x, y, 'co')
-    a_scale = float(max(x)) / float(100)
-    plt.arrow(x[-1], y[-1], (x[0] - x[-1]), (y[0] - y[-1]), head_width=a_scale,
-              color='g', length_includes_head=True)
-    for i in range(0, len(x) - 1):
-        plt.arrow(x[i], y[i], (x[i + 1] - x[i]), (y[i + 1] - y[i]), head_width=a_scale,
-                  color='g', length_includes_head=True)
-
-    # Set axis too slitghtly larger than the set of x and y
-    plt.xlim(0, max(x) * 1.1)
-    plt.ylim(0, max(y) * 1.1)
-    plt.show()
-    # for it1 in Solution:
-    #     print(str(it1.point) + " : " + str(it1.X) + ", " + str(it1.Y))
+    print("Distancia Final: " + str(Cost(Nodes_init)))
+    SHOW(Nodes_init)
